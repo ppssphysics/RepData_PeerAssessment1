@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
-<meta name="author" content="Author: ppss85" />
+<meta name="author" content="ppss85" />
 
 
 <title>Reproducible Research: Peer Assessment 1</title>
@@ -62,7 +62,7 @@ img {
 
 <div id="header">
 <h1 class="title">Reproducible Research: Peer Assessment 1</h1>
-<h4 class="author"><em>Author: ppss85</em></h4>
+<h4 class="author"><em>ppss85</em></h4>
 <h4 class="date"><em>5 January 2016</em></h4>
 </div>
 
@@ -70,30 +70,7 @@ img {
 <div id="introduction" class="section level2">
 <h2>1. Introduction</h2>
 <p>This assignment makes use of data from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.</p>
-<p>A few libraries are needed to run the analysis in particular the plyr, dplyr and ggplot2 packages. Please make sure you have these packages downloaded. The code will laod the libraries automatically.</p>
-<pre><code>## 
-## Attaching package: 'dplyr'
-## 
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-## 
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-## 
-## -------------------------------------------------------------------------
-## You have loaded plyr after dplyr - this is likely to cause problems.
-## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
-## library(plyr); library(dplyr)
-## -------------------------------------------------------------------------
-## 
-## Attaching package: 'plyr'
-## 
-## The following objects are masked from 'package:dplyr':
-## 
-##     arrange, count, desc, failwith, id, mutate, rename, summarise,
-##     summarize</code></pre>
+<p>A few libraries are needed to run the analysis in particular the plyr, ggplot2 and lubridate packages. Please make sure you have these packages downloaded. The code will laod the libraries automatically.</p>
 <pre><code>## Warning: package 'lubridate' was built under R version 3.2.3</code></pre>
 <pre><code>## 
 ## Attaching package: 'lubridate'
@@ -106,10 +83,10 @@ img {
 <h2>2. Loading and preprocessing the data</h2>
 <div id="loading-the-data" class="section level3">
 <h3>2.1 Loading the data</h3>
-<p>We make use of the data available at the following URL, <a href="https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip">https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip</a>. The code checks for the existence of the data file within the analysis directory and decides to re-download the package if necessary.</p>
 <pre class="r"><code># Encode date of the first download on which results are based
-dateDownload &lt;- &quot;January 6 2016 / 7:41&quot;  
-# If the file does not exist, retrieve it from Url
+dateDownload &lt;- &quot;January 6, 2016 at 7:41&quot;</code></pre>
+<p>We make use of the data available at the following URL, <a href="https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip">https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip</a>. The code checks for the existence of the data file within the analysis directory and decides to re-download the package if necessary. If not, the download date of the data being used is January 6, 2016 at 7:41.</p>
+<pre class="r"><code># If the file does not exist, retrieve it from Url
 if (!(file.exists(&quot;activity.csv&quot;))){
   cat(&quot;Downloading data file...&quot;)
   fileUrl &lt;- &quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;
@@ -119,7 +96,7 @@ if (!(file.exists(&quot;activity.csv&quot;))){
 }
 # Load the data into a data.frame
 activ &lt;- read.csv2(&quot;./activity.csv&quot;,sep=&quot;,&quot;)</code></pre>
-<p>The dowload date of the data file being used is the following: January 6 2016 / 7:41.</p>
+<p>The dowload date of the data file being used is the following: January 6, 2016 at 7:41.</p>
 </div>
 <div id="inspection-and-pre-processing-of-the-data" class="section level3">
 <h3>2.2 Inspection and pre-processing of the data</h3>

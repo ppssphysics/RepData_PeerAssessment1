@@ -1,5 +1,5 @@
 # Reproducible Research: Peer Assessment 1
-Author: ppss85  
+ppss85  
 5 January 2016  
 
 
@@ -10,33 +10,7 @@ Author: ppss85
 
 This assignment makes use of data from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.
 
-A few libraries are needed to run the analysis in particular the plyr, dplyr and ggplot2 packages. Please make sure you have these packages downloaded. The code will laod the libraries automatically. 
-
-```
-## 
-## Attaching package: 'dplyr'
-## 
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-## 
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-## 
-## -------------------------------------------------------------------------
-## You have loaded plyr after dplyr - this is likely to cause problems.
-## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
-## library(plyr); library(dplyr)
-## -------------------------------------------------------------------------
-## 
-## Attaching package: 'plyr'
-## 
-## The following objects are masked from 'package:dplyr':
-## 
-##     arrange, count, desc, failwith, id, mutate, rename, summarise,
-##     summarize
-```
+A few libraries are needed to run the analysis in particular the plyr, ggplot2 and lubridate packages. Please make sure you have these packages downloaded. The code will laod the libraries automatically. 
 
 ```
 ## Warning: package 'lubridate' was built under R version 3.2.3
@@ -63,12 +37,16 @@ A few libraries are needed to run the analysis in particular the plyr, dplyr and
 
 ### 2.1 Loading the data
 
-We make use of the data available at the following URL, https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip. The code checks for the existence of the data file within the analysis directory and decides to re-download the package if necessary.
-
 
 ```r
 # Encode date of the first download on which results are based
-dateDownload <- "January 6 2016 / 7:41"  
+dateDownload <- "January 6, 2016 at 7:41"
+```
+
+We make use of the data available at the following URL, https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip. The code checks for the existence of the data file within the analysis directory and decides to re-download the package if necessary. If not, the download date of the data being used is January 6, 2016 at 7:41.
+
+
+```r
 # If the file does not exist, retrieve it from Url
 if (!(file.exists("activity.csv"))){
   cat("Downloading data file...")
@@ -81,7 +59,7 @@ if (!(file.exists("activity.csv"))){
 activ <- read.csv2("./activity.csv",sep=",")
 ```
 
-The dowload date of the data file being used is the following: January 6 2016 / 7:41.
+The dowload date of the data file being used is the following: January 6, 2016 at 7:41.
 
 ### 2.2 Inspection and pre-processing of the data
 
@@ -211,7 +189,7 @@ The values obtained for the mean and median number of steps per day are respecti
 hist(stepsumperday$totalsteps,col=scales::alpha('red',.5),border=F,xlab="Total Steps per Day",main="")
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-10-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/unnamed-chunk-11-1.png" title="" alt="" style="display: block; margin: auto;" />
 
 It therefore seems at first inspection that our subject has been walking at least 10000 steps a day for almost half of the days during the two months period, rarely more than 15000 steps. A finer binning allows to refine this interpretation.   
 
@@ -221,7 +199,7 @@ It therefore seems at first inspection that our subject has been walking at leas
 hist(stepsumperday$totalsteps,col=scales::alpha('red',.5),border=F,xlab="Total Steps per Day",main="",ylim=c(0,25),xlim=c(0,25000),breaks=10)
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-11-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/unnamed-chunk-12-1.png" title="" alt="" style="display: block; margin: auto;" />
 
 We now see that there is rather high frequency count in the first bin, that is days with less than 2500 steps, including no steps at all. This bin will clearly pull the mean to lower values with respect to the central maximum content bin. This result will be re-interpreted in section 3.3, in the light of accounting in a reasonnable manner for missing values in the data set. 
 
@@ -247,7 +225,7 @@ plot(plot$elapsedminutes,plot$meansteps, main="Average daily activity pattern ",
 grid(NULL,NULL, lwd = 1)
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-13-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/unnamed-chunk-14-1.png" title="" alt="" style="display: block; margin: auto;" />
 
 ```r
 #plot(plot$time,plot$meansteps, main="Average daily activity pattern ",xlab="Minutes since midnight",ylab="Mean Number of Steps",type="l",col="blue",xlim=range(myxticks))
@@ -267,7 +245,7 @@ plot(plot$elapsedminutes,plot$meansteps, main="Average daily activity pattern (z
 grid(NULL,NULL, lwd = 1)
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-14-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/unnamed-chunk-15-1.png" title="" alt="" style="display: block; margin: auto;" />
 
 The interpretation, given the data, is that the participant tends to conduct an activity each day that for a short period of time increases his walking rate up to a maximum before gradually decreasing. It exhibits the pattern of a sports activity that starts with a warm-up, a gradual increase in walking speed, and a final cool down phase, like a perhaps a jogging session. 
 
@@ -298,7 +276,7 @@ hist(stepsumperdaynew$totalsteps,col='skyblue',border=F,xlab="Total Steps per Da
 })
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-16-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/unnamed-chunk-17-1.png" title="" alt="" style="display: block; margin: auto;" />
 
 One can see that after replacing the missing values, we singificantly alter the shape of the total step number distribution below the central maximum content bin. In particular, we now clearly see that the first bin has much lower frequency which indicates its previous high frequency was the result of the missing values interpreted as 0. Moreover, the highest frequency bin is even further contributing to the distribution after replacing the missing values.
 
@@ -341,7 +319,7 @@ ggplot(data = daypattern, aes(x = elapsedminutes, y = meansteps*0.1, color = fac
   theme(axis.title.y = element_text(vjust=+1.5))
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-18-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/unnamed-chunk-19-1.png" title="" alt="" style="display: block; margin: auto;" />
 
 One can see from this plot that the peak walking acitivity observed in section 3.2 in more significant on weekdays. On weekend days, the avergage number of steps per day is more uniform throughout the day. 
 
