@@ -181,9 +181,22 @@ stepsumperday <- ddply(activ,~date,summarise,totalsteps=sum(as.numeric(steps),na
 # Take the mean or median of the step column
 meansteps <- mean(as.numeric(stepsumperday$totalsteps),na.rm=TRUE)
 mediansteps <- median(as.numeric(stepsumperday$totalsteps),na.rm=TRUE)
+meansteps
 ```
 
-The values obtained for the mean and median number of steps per day are respectively 9.354230E+03 and 1.039500E+04. As one can see, the mean and the median are not the same which could indicate that this distribution is not normal (not gaussian).This can be appreciated in the figure below that shows the histogram of the mean number of steps taken per day. Of course, the normality could be tested in a quantitative approach (skewness and kurtisis estimation) that however goes beyond the scope of this assignment, at least time wise.
+```
+## [1] 9354.23
+```
+
+```r
+mediansteps
+```
+
+```
+## [1] 10395
+```
+
+The values obtained for the mean and median number of steps per day are respectively 9.354E+03 and 1.040E+04. As one can see, the mean and the median are not the same which could indicate that this distribution is not normal (not gaussian).This can be appreciated in the figure below that shows the histogram of the mean number of steps taken per day. Of course, the normality could be tested in a quantitative approach (skewness and kurtisis estimation) that however goes beyond the scope of this assignment, at least time wise.
 
 
 ```r
@@ -272,6 +285,22 @@ stepsumperdaynew <- ddply(activnew,~date,summarise,totalsteps=sum(as.numeric(ste
 # Take the mean or median of the step column
 meanstepsnew <- mean(as.numeric(stepsumperdaynew$totalsteps),na.rm=TRUE)
 medianstepsnew <- median(as.numeric(stepsumperdaynew$totalsteps),na.rm=TRUE)
+meanstepsnew
+```
+
+```
+## [1] 10766.19
+```
+
+```r
+medianstepsnew
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 # plot histogram
 par(mfrow=c(1,2))
 with(stepsumperdaynew,{
@@ -286,8 +315,8 @@ One can see that after replacing the missing values, we singificantly alter the 
 
 Quantity | Missing Values | Missing Values Replaced
 ---------|----------------|------------------------
-Mean     | 9.354230E+03   | 1.076619E+04
-Median   | 1.039500E+04 | 1.076619E+04
+Mean     | 9.354E+03   | 1.077E+04
+Median   | 1.040E+04 | 1.077E+04
 
 We now see that after replacing for the missing values in the data set (second column), bith the mean and median are in perfect agreement. 
 

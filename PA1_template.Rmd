@@ -127,9 +127,11 @@ stepsumperday <- ddply(activ,~date,summarise,totalsteps=sum(as.numeric(steps),na
 # Take the mean or median of the step column
 meansteps <- mean(as.numeric(stepsumperday$totalsteps),na.rm=TRUE)
 mediansteps <- median(as.numeric(stepsumperday$totalsteps),na.rm=TRUE)
+meansteps
+mediansteps
 ```
 
-The values obtained for the mean and median number of steps per day are respectively `r sprintf("%E", meansteps)` and `r sprintf("%E", mediansteps)`. As one can see, the mean and the median are not the same which could indicate that this distribution is not normal (not gaussian).This can be appreciated in the figure below that shows the histogram of the mean number of steps taken per day. Of course, the normality could be tested in a quantitative approach (skewness and kurtisis estimation) that however goes beyond the scope of this assignment, at least time wise.
+The values obtained for the mean and median number of steps per day are respectively `r sprintf("%1.3E", meansteps)` and `r sprintf("%1.3E", mediansteps)`. As one can see, the mean and the median are not the same which could indicate that this distribution is not normal (not gaussian).This can be appreciated in the figure below that shows the histogram of the mean number of steps taken per day. Of course, the normality could be tested in a quantitative approach (skewness and kurtisis estimation) that however goes beyond the scope of this assignment, at least time wise.
 
 ```{r,fig.align='center'}
 # plot histogram of the total step number
@@ -200,6 +202,8 @@ stepsumperdaynew <- ddply(activnew,~date,summarise,totalsteps=sum(as.numeric(ste
 # Take the mean or median of the step column
 meanstepsnew <- mean(as.numeric(stepsumperdaynew$totalsteps),na.rm=TRUE)
 medianstepsnew <- median(as.numeric(stepsumperdaynew$totalsteps),na.rm=TRUE)
+meanstepsnew
+medianstepsnew
 # plot histogram
 par(mfrow=c(1,2))
 with(stepsumperdaynew,{
@@ -212,8 +216,8 @@ One can see that after replacing the missing values, we singificantly alter the 
 
 Quantity | Missing Values | Missing Values Replaced
 ---------|----------------|------------------------
-Mean     | `r sprintf("%E", meansteps)`   | `r sprintf("%E", meanstepsnew)`
-Median   | `r sprintf("%E", mediansteps)` | `r sprintf("%E", medianstepsnew)`
+Mean     | `r sprintf("%1.3E", meansteps)`   | `r sprintf("%1.3E", meanstepsnew)`
+Median   | `r sprintf("%1.3E", mediansteps)` | `r sprintf("%1.3E", medianstepsnew)`
 
 We now see that after replacing for the missing values in the data set (second column), bith the mean and median are in perfect agreement. 
 
