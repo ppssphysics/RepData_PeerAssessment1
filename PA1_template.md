@@ -181,15 +181,11 @@ stepsumperday <- ddply(activ,~date,summarise,totalsteps=sum(as.numeric(steps),na
 # Take the mean or median of the step column
 meansteps <- mean(as.numeric(stepsumperday$totalsteps),na.rm=TRUE)
 mediansteps <- median(as.numeric(stepsumperday$totalsteps),na.rm=TRUE)
-meansteps
+meansteps; mediansteps
 ```
 
 ```
 ## [1] 9354.23
-```
-
-```r
-mediansteps
 ```
 
 ```
@@ -227,7 +223,19 @@ Using the ddply function of the plyr package, we group our data by the time inte
 ```r
 # Take the mean and standard deviation of the number of steps per interval category
 plot <- ddply(activ,~elapsedminutes,summarise,meansteps=mean(as.numeric(steps),na.rm=TRUE),std=sd(as.numeric(steps),na.rm=TRUE))
-#plot <- ddply(activ,~time,summarise,meansteps=mean(as.numeric(steps),na.rm=TRUE),std=sd(as.numeric(steps),na.rm=TRUE))
+which.max(plot$meansteps); max(plot$meansteps); plot[104,1]
+```
+
+```
+## [1] 104
+```
+
+```
+## [1] 206.1698
+```
+
+```
+## [1] 515
 ```
 
 The plot below the number of steps for each daily five minute time interval, averaged across al days. We observe that there is barely no walking activity before roughly the 350th time interval and after the 1300th interval. The most natural explanation would be that these periods correspond to the sleeping phase of the subject. 
@@ -242,20 +250,11 @@ grid(NULL,NULL, lwd = 1)
 
 <img src="PA1_template_files/figure-html/unnamed-chunk-14-1.png" title="" alt="" style="display: block; margin: auto;" />
 
-```r
-#plot(plot$time,plot$meansteps, main="Average daily activity pattern ",xlab="Minutes since midnight",ylab="Mean Number of Steps",type="l",col="blue",xlim=range(myxticks))
-
-
-# change the sprintf to whatever formatting you want
-#axis(side=2,at=myTicks,
-#    labels=ifelse(myTicks >= 1, sprintf("%.0f", myTicks),
-#sprintf("%0.1f", myTicks)))
-```
-
 We can see that there is strong maximum around close to the 250th minute, at the exact 104 time interval which corresponds to the interval from the 515th elapsed minute to the 520 minute. The maximum number of steps in that time interval is exactly 206.1698113.
 
 
 ```r
+# plot a zoom of the time series around maximum 
 plot(plot$elapsedminutes,plot$meansteps, main="Average daily activity pattern (zoom)",xlab="Minutes since midnight",ylab="Mean Number of Steps",type="l",col="blue",xlim=c(450,650))
 grid(NULL,NULL, lwd = 1)
 ```

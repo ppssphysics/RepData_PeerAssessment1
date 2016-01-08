@@ -100,6 +100,7 @@ activ$elapsedminutes <- activ$interval-((activ$interval%/%100)*100)+(activ$inter
 activ$time <- paste(activ$interval%/%100,activ$interval - (activ$interval%/%100)*100,sep=":")
 activ$time <- as.factor(activ$time)
 #activ$time <- as.Date(activ$time,"%H:%M",stringAsFactors=FALSE)
+# from other guy : timeMostSteps <-  gsub("([0-9]{1,2})([0-9]{2})", "\\1:\\2", averageStepsPerTimeBlock[mostSteps,'interval'])
 ```
 
 Our new working data set takes the form below:
@@ -127,8 +128,7 @@ stepsumperday <- ddply(activ,~date,summarise,totalsteps=sum(as.numeric(steps),na
 # Take the mean or median of the step column
 meansteps <- mean(as.numeric(stepsumperday$totalsteps),na.rm=TRUE)
 mediansteps <- median(as.numeric(stepsumperday$totalsteps),na.rm=TRUE)
-meansteps
-mediansteps
+meansteps; mediansteps
 ```
 
 The values obtained for the mean and median number of steps per day are respectively `r sprintf("%1.3E", meansteps)` and `r sprintf("%1.3E", mediansteps)`. As one can see, the mean and the median are not the same which could indicate that this distribution is not normal (not gaussian).This can be appreciated in the figure below that shows the histogram of the mean number of steps taken per day. Of course, the normality could be tested in a quantitative approach (skewness and kurtisis estimation) that however goes beyond the scope of this assignment, at least time wise.
@@ -155,7 +155,7 @@ Using the ddply function of the plyr package, we group our data by the time inte
 ```{r}
 # Take the mean and standard deviation of the number of steps per interval category
 plot <- ddply(activ,~elapsedminutes,summarise,meansteps=mean(as.numeric(steps),na.rm=TRUE),std=sd(as.numeric(steps),na.rm=TRUE))
-#plot <- ddply(activ,~time,summarise,meansteps=mean(as.numeric(steps),na.rm=TRUE),std=sd(as.numeric(steps),na.rm=TRUE))
+which.max(plot$meansteps); max(plot$meansteps); plot[104,1]
 ```
 
 The plot below the number of steps for each daily five minute time interval, averaged across al days. We observe that there is barely no walking activity before roughly the 350th time interval and after the 1300th interval. The most natural explanation would be that these periods correspond to the sleeping phase of the subject. 
@@ -165,18 +165,12 @@ The plot below the number of steps for each daily five minute time interval, ave
 myxticks <- c(0.,200,400,600,800,1000,1200,1400)
 plot(plot$elapsedminutes,plot$meansteps, main="Average daily activity pattern ",xlab="Minutes since midnight",ylab="Mean Number of Steps",type="l",col="blue",xlim=range(myxticks))
 grid(NULL,NULL, lwd = 1)
-#plot(plot$time,plot$meansteps, main="Average daily activity pattern ",xlab="Minutes since midnight",ylab="Mean Number of Steps",type="l",col="blue",xlim=range(myxticks))
-
-
-# change the sprintf to whatever formatting you want
-#axis(side=2,at=myTicks,
-#    labels=ifelse(myTicks >= 1, sprintf("%.0f", myTicks),
-#sprintf("%0.1f", myTicks)))
 ```
 
 We can see that there is strong maximum around close to the 250th minute, at the exact `r which.max(plot$meansteps)` time interval which corresponds to the interval from the `r plot[which.max(plot$meansteps),1]`th elapsed minute to the `r plot[which.max(plot$meansteps),1]+5` minute. The maximum number of steps in that time interval is exactly `r max(plot[,2])`.
 
 ```{r,fig.align='center'}
+# plot a zoom of the time series around maximum 
 plot(plot$elapsedminutes,plot$meansteps, main="Average daily activity pattern (zoom)",xlab="Minutes since midnight",ylab="Mean Number of Steps",type="l",col="blue",xlim=c(450,650))
 grid(NULL,NULL, lwd = 1)
 ```
