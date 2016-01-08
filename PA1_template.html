@@ -85,7 +85,8 @@ img {
 <h3>2.1 Loading the data</h3>
 <pre class="r"><code># Encode date of the first download on which results are based
 dateDownload &lt;- &quot;January 6, 2016 at 7:41&quot;</code></pre>
-<p>We make use of the data available at the following URL, <a href="https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip">https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip</a>. The code checks for the existence of the data file within the analysis directory and decides to re-download the package if necessary. If not, the download date of the data being used is January 6, 2016 at 7:41.</p>
+<p>We make use of the data available at the following URL: <a href="https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip">https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip</a>.</p>
+<p>The code checks for the existence of the data file within the analysis directory and decides to re-download the package if necessary. If not, the download date of the data being used is January 6, 2016 at 7:41.</p>
 <pre class="r"><code># If the file does not exist, retrieve it from Url
 if (!(file.exists(&quot;activity.csv&quot;))){
   cat(&quot;Downloading data file...&quot;)

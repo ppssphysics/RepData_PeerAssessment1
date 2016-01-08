@@ -43,7 +43,9 @@ A few libraries are needed to run the analysis in particular the plyr, ggplot2 a
 dateDownload <- "January 6, 2016 at 7:41"
 ```
 
-We make use of the data available at the following URL, https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip. The code checks for the existence of the data file within the analysis directory and decides to re-download the package if necessary. If not, the download date of the data being used is January 6, 2016 at 7:41.
+We make use of the data available at the following URL: https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip. 
+
+The code checks for the existence of the data file within the analysis directory and decides to re-download the package if necessary. If not, the download date of the data being used is January 6, 2016 at 7:41.
 
 
 ```r
