@@ -269,18 +269,27 @@ Based on the new data set with no missing values, we can produce again the histo
 ```r
 # Summarise the data set by grouping the date variable and summing other variables
 stepsumperdaynew <- ddply(activnew,~date,summarise,totalsteps=sum(as.numeric(steps),na.rm=TRUE))
+# Take the mean or median of the step column
+meanstepsnew <- mean(as.numeric(stepsumperdaynew$totalsteps),na.rm=TRUE)
+medianstepsnew <- median(as.numeric(stepsumperdaynew$totalsteps),na.rm=TRUE)
 # plot histogram
-#set.seed(42)
 par(mfrow=c(1,2))
 with(stepsumperdaynew,{
-hist(stepsumperday$totalsteps,col=scales::alpha('red',.5),border=F,xlab="Total Steps per Day",ylim=c(0,25),xlim=c(0,25000),breaks=10,main="With Missing Values")
+hist(stepsumperday$totalsteps,col=scales::alpha('red',.5),border=F,xlab="Total Steps per Day",ylim=c(0,25),xlim=c(0,25000),breaks=10,main="Missing Values")
 hist(stepsumperdaynew$totalsteps,col='skyblue',border=F,xlab="Total Steps per Day",main="Missing Values Replaced",ylim=c(0,25),xlim=c(0,25000),breaks=10)
 })
 ```
 
 <img src="PA1_template_files/figure-html/unnamed-chunk-17-1.png" title="" alt="" style="display: block; margin: auto;" />
 
-One can see that after replacing the missing values, we singificantly alter the shape of the total step number distribution below the central maximum content bin. In particular, we now clearly see that the first bin has much lower frequency which indicates its previous high frequency was the result of the missing values interpreted as 0. Moreover, the highest frequency bin is even further contributing to the distribution after replacing the missing values.
+One can see that after replacing the missing values, we singificantly alter the shape of the total step number distribution below the central maximum content bin. In particular, we now clearly see that the first bin has much lower frequency which indicates its previous high frequency was the result of the missing values interpreted as 0. We expect this new distribution to have a different mean and median with respect to the set with missing values from section 3.1. In the table below, we summarize these quantities for the two cases explored:
+
+Quantity | Missing Values | Missing Values Replaced
+---------|----------------|------------------------
+Mean     | 9.354230E+03   | 1.076619E+04
+Median   | 1.039500E+04 | 1.076619E+04
+
+We now see that after replacing for the missing values in the data set (second column), bith the mean and median are in perfect agreement. 
 
 It is important to consider these results with caution since our choice for replacing the missing values in the data set should require carefull inspection and verification.
 
